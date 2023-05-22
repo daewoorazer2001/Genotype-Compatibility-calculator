@@ -1,0 +1,346 @@
+#:kivy 2.1
+WindowManager:
+    MainWindow:
+    GCC:
+    LG:
+    LB:
+    LR:
+    AboutMe:
+
+
+
+<AboutMe>:
+    name: "AboutAppGene"
+    GridLayout:
+        cols: 1
+        padding: 5
+        size_hint: .8, 1
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        TextInput:
+            size_hint: (1, 0.9)
+            font_name: "Times New Roman"
+            hint_text_color: 'black'
+            id: aboutme
+            hint_text: 'Disclaimer:\n This app is designed to educate the general public on Blood Genotype, Blood Group and Rhesus Factor. This app does not provide medical services and hence if you are in need of Emergency Medical Services, exit this App and call 911 immediately.'
+            font_size: 12
+            multiline: True
+            readonly: True
+        Button:
+            background_color: "red"
+            size_hint: (1, 0.1)
+            text: "Back to main page"
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
+
+
+<MainWindow>:
+    name: "main"
+
+    GridLayout:
+        cols: 1
+        #spacing: "0dp"
+        Image:
+            source: 'apgene3.png'
+            background_color: 'black'
+            size_hint: 1, 0.4  # set the size of the logo image
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        Button:
+            background_color: "black"
+            font_name: "Times New Roman"
+            text: "...click to learn more about ApGene Inc."
+            font_size: "12dp"
+            size_hint: 1, .05
+            on_release:
+                app.root.current = "AboutAppGene"
+                root.manager.transition.direction = "left"
+
+        GridLayout:
+            cols: 2
+
+
+            Button:
+                font_name: "Times New Roman"
+                text: "Genotype Compatibility Calculator"
+                background_color: "red"
+                font_size: "25dp"
+                on_release:
+                    app.root.current = "GCC"
+                    root.manager.transition.direction = "left"
+
+            Button:
+                font_name: "Times New Roman"
+                text: "Learn about my Genotype"
+                background_color: "green"
+                font_size: "25dp"
+                on_release:
+                    app.root.current = "LG"
+                    root.manager.transition.direction = "left"
+
+            Button:
+                font_name: "Times New Roman"
+                text: "Learn about my Blood Group"
+                background_color: "green"
+                font_size: "25dp"
+                on_release:
+                    app.root.current = "LB"
+                    root.manager.transition.direction = "left"
+
+
+            Button:
+                background_color: "red"
+                font_name: "Times New Roman"
+                text: "Learn about my Rhesus Factor"
+                background_color: "green"
+                font_size: "25dp"
+                on_release:
+                    app.root.current = "LR"
+                    root.manager.transition.direction = "left"
+
+
+<GCC>:
+    name: "GCC"
+    GridLayout:
+        cols: 2
+        padding: 5
+        size_hint: .8, .5
+        pos_hint: {'center_x': .5, 'y': .5}
+
+        Label:
+            font_name: "Times New Roman"
+            text: "Select your Genotype:"
+            font_size: "14dp"
+
+        Spinner:
+            font_name: "Times New Roman"
+            id: spinner_id_user
+            text: "click to select\n your Genotype"
+            values: ["AA", "AS", "SS"]
+
+
+
+        Label:
+            font_name: "Times New Roman"
+            text: "Select your Spouse's Genotype:"
+            font_size: "14dp"
+
+        Spinner:
+            font_name: "Times New Roman"
+            id: spinner_id_spouse
+            text: "Click to select your\n Spouse's Genotype"
+            values: ["AA", "AS", "SS"]
+
+
+
+
+    GridLayout:
+        font_name: "Times New Roman"
+        padding: 5
+        cols: 1
+        size_hint: .8, .5
+        pos_hint: {'center_x': .5, 'top': .5}
+
+        TextInput:
+            size_hint: (1, 0.6)
+            font_name: "Times New Roman"
+            id: zanga
+            hint_text: '...result shows here'
+            hint_text_color: 'black'
+            font_size: 15
+            multiline: True
+            readonly: True
+
+        Button:
+            size_hint: (1, 0.2)
+            font_name: "Times New Roman"
+            text: "Calculate Compatibility!"
+            on_release:
+                if spinner_id_user.text == 'AA' and spinner_id_spouse.text == 'AA': zanga.text = "You are safe"
+                elif spinner_id_user.text == 'AA' and spinner_id_spouse.text == 'AS': zanga.text = "This combination is safe, however, there is 50% chance of passing Sickle Cell Trait to your offspring. The 50% does not necessarily mean half of your offspring will inherit Sickle Cell Trait, it is just a probability. Click on the link below to learn more!"
+                elif spinner_id_user.text == 'AA' and spinner_id_spouse.text == 'SS': zanga.text = "You are at no risk of passing Sickle Cell Disease to your offsprings, however, it shows your partner live with Sickle Cell Disease. Endeavor to register your partner with a local Hematology unit or Sickle Cell Disease clinic to better maintain your health condition. However, Sickle Cell Traits will be passed down to your offsprings. Kindly click on the link below to learn more."
+                elif spinner_id_user.text == 'AS' and spinner_id_spouse.text == 'AA': zanga.text = "This combination is safe, however, there is 50% chance of passing Sickle Cell Trait to your offspring. The 50% does not necessarily mean half of your offspring will inherit Sickle Cell Trait, it is just a probability. Click on the link below to learn more!"
+                elif spinner_id_user.text == 'AA' and spinner_id_spouse.text == 'SS': zanga.text = "You are at no risk of passing Sickle Cell Disease to your offsprings, however, it shows your partner lives with Sickle Cell Disease. Endeavor to register your partner with a local Hematology unit or Sickle Cell Disease clinic to better maintain your health condition. However, Sickle Cell Traits will be passed down to your offsprings. Kindly click on the link below to learn more."
+                elif spinner_id_user.text == 'AS' and spinner_id_spouse.text == 'AS': zanga.text = "There is 25% risk of having a baby with Sickle Cell Disease, while this number does not confirm that your babies will be born with SCD, it is also possible every baby delivered will have SCD. Sickle Cell Traits will definitely be passed down to your offspring. Click on the link below to learn more:"
+                elif spinner_id_user.text == 'AS' and spinner_id_spouse.text == 'SS': zanga.text = "There is 50% risk of having a baby with Sickle Cell Disease, while this number does not confirm that your babies will be born with SCD, it is also possible every baby delivered will have SCD. This also shows your partner lives with Sickle Cell Disease, endeavor to register your partner with a local Hematology unit or Sickle Cell Disease clinic to better maintain your health condition. Click on the link below to learn more:"
+                elif spinner_id_user.text == 'SS' and spinner_id_spouse.text == 'AA': zanga.text = "You are at no risk of passing Sickle Cell Disease to your offsprings, however, This also shows you live with Sickle Cell Disease. Endeavor to register with a local Hematology unit or Sickle Cell Disease clinic to better maintain your health condition. However, Sickle Cell Traits will be passed down to your offsprings. Kindly click on the link below to learn more."
+                elif spinner_id_user.text == 'SS' and spinner_id_spouse.text == 'AS': zanga.text = "There is 50% risk of having a baby with Sickle Cell Disease, although has nothing to do with percentage, it is possible every baby delivered will have SCD, also possible non will have SCD. This combination shows you live with Sickle Cell Disease, endeavor to register with a local Hematology unit or Sickle Cell Disease clinic to better maintain your health condition. Kindly click on the link below to learn more."
+                elif spinner_id_user.text == 'SS' and spinner_id_spouse.text == 'SS': zanga.text = "Every baby delivered will have the Sickle Cell Disease. This also shows you both live with Sickle Cell Disease. Endeavor to register with a local Hematology unit or Sickle Cell Disease clinic to better maintain your health condition. Kindly click on the link below to learn more."
+                else: zanga.text = "Select values for both fields"
+        Button:
+            background_color: "red"
+            size_hint: (1, 0.1)
+            font_name: "Times New Roman"
+            text: "learn more about Sickle Cell Disease"
+            on_release:
+                import webbrowser
+                webbrowser.open('https://www.cdc.gov/ncbddd/sicklecell/index.html')
+        Button:
+            background_color: "red"
+            size_hint: (1, 0.1)
+            font_name: "Times New Roman"
+            text: "Back to main page"
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
+                spinner_id_spouse.text = "Click to select your\n Spouse's Genotype"
+                spinner_id_user.text = "Click to select\n your Genotype"
+                zanga.text = "...result shows here"
+                    
+
+
+<LG>:
+    name: "LG"
+    
+    GridLayout:
+        cols: 1
+        padding: 5
+        size_hint: .8, 1
+        pos_hint: {'center_x': .5, 'center_y': .5}
+
+        Spinner:
+            size_hint: (1, .2)
+            font_name: "Times New Roman"
+            id: spinner_id_LG
+            text: "click to select your Genotype"
+            values: ["AA", "AS", "SS/SC/CC/ and all S hemoglobin variants"]
+
+        TextInput:
+            size_hint: (1, .5)
+            id: output_LG
+            size_hint: (1, 1)
+            font_name: "Times New Roman"
+            hint_text: '...result shows here'
+            hint_text_color: 'black'
+            font_size: 15
+            multiline: True
+            readonly: True
+
+        Button:
+            size_hint: (1, .1)
+            font_name: "Times New Roman"
+            text: "Submit!"
+            on_release:
+                if spinner_id_LG.text == 'AA': output_LG.text = "Hemoglobin is that portion of the red blood cells which carries oxygen to all parts of the body. The most common type of hemoglobin is called Hemoglobin A. Sometimes there are changes in Hemoglobin A, and other types of hemoglobin are formed.\n Genes are units of hereditary material which are passed from parents to their children. These genes, which act in pairs, determine the physical characteristics unique to each individual. One gene in each pair is contributed by the mother and the other gene in the pair is contributed by the father. Just as genes for eye color, hair color, and many other traits are inherited, so are genes for hemoglobin. \n \n If a person inherits a Hemoglobin A gene from each parent (AA), that person will have normal hemoglobin."
+                elif spinner_id_LG.text == 'AS': output_LG.text = "Sometimes a person will inherit a gene for normal Hemoglobin A from one parent and a gene for Hemoglobin S from the other parent. This is Hemoglobin AS, also known as sickle cell trait. Sickle cell trait occurs in one out of every 10-12 black Americans and usually causes no health problems.\n \n Sickle cell trait is not a mild form of sickle cell anemia. However, there is reason for concern. When both parents have sickle cell trait (AS), their children may inherit two genes for sickle hemoglobin and have sickle cell anemia."
+                elif spinner_id_LG.text == 'SS/SC/CC/ and all S hemoglobin variants': output_LG.text = "If a person inherits a gene for Hemoglobin S from both parents (SS), that person will have sickle cell anemia. In sickle cell anemia the hemoglobin releases too much oxygen, causing the normally round blood cells to be sickle shaped. These sickle cells tend to die more quickly than normal red blood cells and the body does not receive enough oxygen. This may cause the person to be pale, short of breath and easily tired. At times, the sickle cells may become stuck in the small blood vessels and cause pain and damage to major organs. This condition is known as “sickle cell crisis.”\n \n Other medical problems include slow growth, more frequent infections, jaundice and blood in the urine. These symptoms and their severity differ from person to person. Sickle cell anemia affects one out of every 400-600 black Americans. Although it is most common in blacks, it also occurs in people of Mediterranean, Middle Eastern, East Indian, Latin American and Asian descent."
+
+                else: output_LG.text = "Select your genotype!"
+        Button:
+            background_color: "red"
+            size_hint: (1, 0.1)
+            font_name: "Times New Roman"
+            text: "learn more about Genotypes"
+            on_release:
+                import webbrowser
+                webbrowser.open('https://health.mo.gov/living/families/genetics/sicklecell/pdf/sickle-cell-booklet.pdf')
+        Button:
+            background_color: "red"
+            size_hint: (1, .1)
+            font_name: "Times New Roman"
+            text: "Back to main page"
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
+                spinner_id_LG.text = "Choose your Genotype"
+                output_LG.text = "..."
+
+<LB>:
+    name: "LB"
+    
+    GridLayout:
+        cols: 1
+        padding: 5
+        size_hint: .8, 1
+        pos_hint: {'center_x': .5, 'center_y': .5}
+
+        Spinner:
+            size_hint: (1, .2)
+            font_name: "Times New Roman"
+            id: spinner_id_LB
+            text: "click to select your Blood Group"
+            values: ["A", "B", "AB", "O"]
+            on_text:
+                if spinner_id_LB.text == 'A': output_LB.text = "You have A antigenes, B antibodies"
+                elif spinner_id_LB.text == 'B': output_LB.text = "You have B antigenes, A antibodies"
+                elif spinner_id_LB.text == 'AB': output_LB.text = "You have A and B antigenes, no antibodies"
+                elif spinner_id_LB.text == 'O': output_LB.text = "You have no antigene, but A and B antibodies"
+                else: output_LB.text = "Select your Blood Group!"
+
+        TextInput:
+            id: output_LB
+            size_hint: (1, .6)
+            font_name: "Times New Roman"
+            hint_text: '...result shows here'
+            hint_text_color: 'black'
+            font_size: 15
+            multiline: True
+            readonly: True
+        Button:
+            background_color: "red"
+            size_hint: (1, 0.1)
+            font_name: "Times New Roman"
+            text: "learn more about Blood Group Types"
+            on_release:
+                import webbrowser
+                webbrowser.open('https://medlineplus.gov/ency/article/003345.htm')
+
+        Button:
+            background_color: "red"
+            size_hint: (1, .1)
+            font_name: "Times New Roman"
+            text: "Back to main page"
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
+                spinner_id_LB.text = "click to select your Blood Group"
+                output_LB.text = "..."
+
+<LR>:
+    name: "LR"
+    GridLayout:
+        cols: 1
+        padding: 5
+        size_hint: .8, 1
+        pos_hint: {'center_x': .5, 'center_y': .5}
+
+        Spinner:
+            size_hint: (1, .2)
+            font_name: "Times New Roman"
+            id: spinner_id_LR
+            text: "click to select your Rhesus Factor"
+            values: ["+ Positive", "- Negative",]
+            on_text:
+                if spinner_id_LR.text == '+ Positive': output_LR.text = "The Rh factor is a protein that can be found on the surface of red blood cells. You are Rh positive because your blood cells have this protein. A woman with this protein should speak with her primary care physician before going into pregnancy."
+                elif spinner_id_LR.text == '- Negative': output_LR.text = "The Rh factor is a protein that can be found on the surface of red blood cells. You are Rh negative because your blood cells DO NOT have this protein"
+                else: output_LR.text = "Select your Rhesus Factor!"
+
+        TextInput:
+            size_hint: (1, .6)
+            id: output_LR
+            size_hint: (1, 1)
+            font_name: "Times New Roman"
+            hint_text: '...result shows here'
+            hint_text_color: 'black'
+            font_size: 15
+            multiline: True
+            readonly: True
+
+        Button:
+            background_color: "red"
+            size_hint: (1, 0.1)
+            font_name: "Times New Roman"
+            text: "learn more about Rhesus Factor and its Incompatibility"
+            on_release:
+                import webbrowser
+                webbrowser.open('https://medlineplus.gov/ency/article/001600.htm')
+        Button:
+            background_color: "red"
+            size_hint: (1, .1)
+            font_name: "Times New Roman"
+            text: "Back to main page"
+            on_release:
+                app.root.current = "main"
+                root.manager.transition.direction = "right"
+                spinner_id_LR.text = "click to select your Rhesus Factor"
+                output_LR.text = "..."
+
